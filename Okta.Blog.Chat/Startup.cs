@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Okta.AspNetCore;
+using Okta.Blog.Chat.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +22,27 @@ namespace Okta.Blog.Chat {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            services.AddRazorPages();
+            var oktaMvcOptions = new OktaMvcOptions() {
+                OktaDomain = Configuration["Okta:Domain"],
+                ClientId = Configuration["Okta:ClientId"],
+                ClientSecret = Configuration["Okta:ClientSecret"],
+                Scope = new List<string> { "openid", "profile", "email" },
+            };
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OktaDefaults.MvcAuthenticationScheme;
+            })
+            .AddCookie()
+            .AddOktaMvc(oktaMvcOptions);
+
+            services.AddRazorPages()
+            .AddRazorPagesOptions(options => {
+                options.Conventions.AuthorizePage("/Chat");
+            });
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,10 +60,12 @@ namespace Okta.Blog.Chat {
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }
