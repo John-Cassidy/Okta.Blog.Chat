@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Okta.Blog.Chat", "Okta.Blog.Chat\Okta.Blog.Chat.csproj", "{C0D46068-A2CE-4968-9E86-2E27E65B64CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0D46068-A2CE-4968-9E86-2E27E65B64CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0D46068-A2CE-4968-9E86-2E27E65B64CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0D46068-A2CE-4968-9E86-2E27E65B64CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0D46068-A2CE-4968-9E86-2E27E65B64CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {330F2FBC-9124-4612-9A00-15EDD4B1DF2B}
+	EndGlobalSection
+EndGlobal
